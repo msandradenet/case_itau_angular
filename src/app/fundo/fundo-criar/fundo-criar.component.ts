@@ -31,7 +31,7 @@ export class FundoCriarComponent implements OnInit {
      }   
 
   ngOnInit(): void {
-    this.fundoService.obterProfisoes().subscribe((response: any) => {
+    this.fundoService.obterTipos().subscribe((response: any) => {
       this.listaTipos = response.result;
     });
   }
@@ -56,7 +56,7 @@ export class FundoCriarComponent implements OnInit {
               this.toastr.error(response.message);
             }
           },
-          error =>{console.log(error.error.message);this.toastr.error(error.error.message); });
+          error =>{this.toastr.error(error.error.message); });
         }
        });
        

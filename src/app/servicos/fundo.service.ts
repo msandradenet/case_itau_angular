@@ -11,20 +11,24 @@ constructor(private http: HttpClient){}
 
     private urlApiFundos = environment.urlApiFundos;
     private v = "v2/";
+    private request: any = {
+        Codigo: String, 
+        Patrimonio: Number
+    }
 
     obterFundos() : Observable<Fundo[]>{
         return this.http
-            .get<Fundo[]>(this.urlApiFundos + this.v + "fundo");
+        .get<Fundo[]>(this.urlApiFundos + this.v + "fundo");
     }   
 
-    obterFundo(id: number) : Observable<Fundo[]>{
+    obterFundo(codigo: number) : Observable<Fundo[]>{
         return this.http
-            .get<Fundo[]>(this.urlApiFundos + this.v + "fundo/"+ id);
+        .get<Fundo[]>(this.urlApiFundos + this.v + "fundo/"+ codigo);
     }
 
-    obterProfisoes() : Observable<Fundo[]>{
+    obterTipos() : Observable<Fundo[]>{
         return this.http
-            .get<Fundo[]>(this.urlApiFundos + this.v + "tipoFundo");
+        .get<Fundo[]>(this.urlApiFundos + this.v + "tipoFundo");
     }
 
     cadastrarFundo(fundo: Fundo) {
@@ -37,8 +41,15 @@ constructor(private http: HttpClient){}
         .put(this.urlApiFundos + this.v + "fundo", fundo).pipe((response: any) => response);
     }
 
-    excluirFundo(id: number) {
+    excluirFundo(codigo: number) {
         return this.http
-        .delete(this.urlApiFundos + this.v + "fundo/" + id).pipe((response: any) => response);
+        .delete(this.urlApiFundos + this.v + "fundo/" + codigo).pipe((response: any) => response);
+    }
+
+    alterarFundo(codigo: string, patrimonio: string) {
+        this.request.Codigo = codigo;        
+        this.request.Patrimonio = parseFloat(patrimonio);        
+        return this.http
+        .put(this.urlApiFundos + this.v + "fundo/patrimonio", this.request).pipe((response: any) => response);
     }
 }

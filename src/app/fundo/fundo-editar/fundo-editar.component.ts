@@ -41,12 +41,11 @@ export class FundoEditarComponent implements OnInit {
   ngOnInit(): void {
     this.idRoute = this.ActivatedRoute.snapshot.paramMap.get("id");
 
-    this.fundoService.obterProfisoes().subscribe((response: any) => {
+    this.fundoService.obterTipos().subscribe((response: any) => {
       this.listaTipos = response.result;
     });
 
     this.fundoService.obterFundo(this.idRoute).subscribe((response: any) => {
-      console.log(response.result);
       this.carregarForm(response.result);
     });
   }
@@ -71,10 +70,16 @@ export class FundoEditarComponent implements OnInit {
               this.toastr.error(response.message);
             }
           },
-            error => this.toastr.error(error.message));
+            error => this.toastr.error(error.error.message));
         }
       });
-    }
+    }  
+    else{
+      Object.keys(this.formFundo.controls).forEach(campo => {
+        const controle = this.formFundo.get(campo);
+        controle?.markAsDirty();
+      });
+    }   
   }
 
   aplicaCssErro(campo: any) {

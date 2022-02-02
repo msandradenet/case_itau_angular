@@ -39,13 +39,22 @@
                           <td width="13%">{{item.codigo}}</td>
                           <td>{{item.nome | titlecase }}</td>
                           <td>{{item.cnpj | mask: 'CPF_CNPJ'}}</td>
-                          <td>{{item.patrimonio | currency:'BRL':true}}</td>
+                          <td>
+                            {{item.patrimonio | currency:'BRL':true}}
+
+                            <div class="btn-group float-right btn-group-sm">
+                              <button (click)="alterarPatrimonio(item.codigo, item.patrimonio)" class="btn btn-dark"><i
+                                  class="fas fa-edit"></i></button>
+                            </div>
+                            
+                          </td>
                           <td>{{item.tipoFundo.nome}}</td>
                           <td class="text-right py-0 align-middle">
                             <div class="btn-group btn-group-sm">
                               <button [routerLink]="['/fundo-editar', item.codigo]" class="btn btn-info"><i
                                   class="fas fa-edit"></i></button>
-                              <button (click)="excluirFundo(item.codigo)" class="btn btn-danger"><i class="fas fa-trash"></i></button>
+                              <button (click)="excluirFundo(item.codigo)" class="btn btn-danger"><i
+                                  class="fas fa-trash"></i></button>
                             </div>
                           </td>
                         </tr>
